@@ -1,10 +1,12 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Image;
 use App\Models\User;
 use Illuminate\Http\Request;
+use File;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -36,7 +38,7 @@ class UserController extends Controller
 		$validator = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required',
-            'profile' => 'nullable|image',
+            'fichier' => 'nullable|file',
         ]);
 		// Gestion des messages en cas d'échec.
 		if ($validator->fails()) {
@@ -46,15 +48,51 @@ class UserController extends Controller
 				"Data"      => null,
 			], 200);
 		}
-        if ($request->hasFile('profile')) {
-            Image::make($request->profile)->resize(300, 200)->save(public_path('storage\\test.jpg'));
+        if ($request->hasFile('fichier')) {
+
+            $old_name = $request->file('fichier')->getClientOriginalName();
+            $ext = $request->file('fichier')->getClientOriginalExtension();
+            $size = $request->file('fichier')->getSize();
+
+            $image = $request->file('fichier');
+            $file = file_get_contents($image);
+            $file64 = base64_encode($file);
+
+            $user = User::create(
+                [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'old_name' => $old_name,
+                    'ext' => $ext,
+                    'size' => $size,
+
+                    'data' => $file64,
+                    'binaire' => pg_escape_bytea($file),
+                ]
+            );
+
+            return $user;
+            $path = storage_path('/app/avatars/'. $user->id .'/');
+            
+            $filename = 'avatar.'. $ext;
+            
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0775, true, true);
+            }
+            $location = storage_path('/app/avatars/' . $user->id . '/'. $filename);
+
+            Image::make($image)->resize(800,400)->save($location); //resizing and saving the image
+            
+            User::whereId($user->id)->update([
+                'fichier' => $user->id . '/' . $filename,
+            ]);
+            
         }
 		// Verification de Role
-        $data = User::create($validator->validated());
-        return response()->json([
-            "Status"    => "Succes",
-            "Data"      => $data,
-        ], 200);
+        // $user1 = User::find($user->id);
+        // $test2 = pg_fetch_object($user1->binaire);
+        // return pg_unescape_bytea($test2->field_bytea);
+
     }
 
 
