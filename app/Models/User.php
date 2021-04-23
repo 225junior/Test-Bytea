@@ -22,6 +22,7 @@ class User extends Authenticatable
         'old_name',
         'ext',
         'size',
+        'originalfile',
         'data',
         'binaire',
     ];

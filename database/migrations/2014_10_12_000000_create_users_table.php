@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('ext')->nullable();
             $table->string('size')->nullable();
             $table->string('dimensions')->nullable();
+            $table->text('originalfile')->nullable();
             $table->text('data')->nullable();
             $table->binary('binaire')->nullable();
             $table->string('fichier')->nullable();

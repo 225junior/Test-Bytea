@@ -67,37 +67,46 @@ class UserController extends Controller
 		}
         if ($request->hasFile('fichier')) {
 
-            $old_name = $request->file('fichier')->getClientOriginalName();
-            $ext = $request->file('fichier')->getClientOriginalExtension();
-            $size = $request->file('fichier')->getSize();
+            $file = file_get_contents($request->file('fichier'));
 
-            $image = $request->file('fichier');
-            $file = file_get_contents($image);
             $file64 = base64_encode($file);
-            dd($file64);
-            $user = User::create(
-                [
+
+            $binaire = pg_escape_bytea($file);
+
+            // $file64escape = pg_escape_bytea($file64);
+
+            //dd($file);
+
+            $user = User::create([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'old_name' => $old_name,
-                    'ext' => $ext,
-                    'size' => $size,
+                    'old_name' => $request->file('fichier')->getClientOriginalName(), # anciens nom
+                    'ext' => $request->file('fichier')->getClientOriginalExtension(), # extension
+                    'size' => $request->file('fichier')->getSize(), # taille
 
+                    'binaire' => $binaire,
                     'data' => $file64,
-                    'binaire' => pg_escape_bytea($file),
-                ]
-            );
+            ]);
 
-            $decodage = base64_decode($user->data);
+            // $decodage = base64_decode($user->data);
 
-            return $decodage;
+            // return $decodage;
         }
 
     }
 
 
+    public function affichage(){
+        $userFile = User::find(6);
+        $file_decode = base64_decode($userFile->data);
+        $img = imagecreatefromstring($file_decode);
 
+        header('Content-Type:Image/jpg');
+        imagejpeg($img);
+        return $img;
+    }
 
+    
 
 
 
