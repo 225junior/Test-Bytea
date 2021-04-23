@@ -106,7 +106,16 @@ class UserController extends Controller
         return $img;
     }
 
-    
+    public function pdf(){
+        $file64 = User::find(7)->data; 
+
+        $decode = base64_decode($file64);
+        $pdf = fopen('test.pdf','w');
+        fwrite($pdf, $decode);
+        fclose($pdf);
+        return $pdf;
+    }
+
 
 
 
