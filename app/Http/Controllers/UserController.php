@@ -3,10 +3,8 @@
 
 namespace App\Http\Controllers;
 
-use Image;
 use App\Models\User;
 use Illuminate\Http\Request;
-use File;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -25,6 +23,25 @@ class UserController extends Controller
 		], 200);
     }
 
+    public function indexx()
+    {
+        $userFile = User::find(1);
+        $userFileData = base64_decode($userFile->data);
+
+        // $userFileDataDownload = file_put_contents('image.jpg', $userFileData);
+        // $userFileDataDownload = file_put_contents('image.jpg', file_get_contents($userFileData));
+        // $userFileDataDownload = $userFileData;
+        $filename = $userFileData;
+        $handle = fopen($filename, "rb");
+        $contents = fread($handle, filesize($filename));
+         fclose($handle);
+        // $userFileDataDownload = readfile($userFileData);
+        return $contents;
+        // return $userFileDataDownload;
+    }
+
+
+    
 
     /**
      * Store a newly created resource in storage.
@@ -57,7 +74,7 @@ class UserController extends Controller
             $image = $request->file('fichier');
             $file = file_get_contents($image);
             $file64 = base64_encode($file);
-
+            dd($file64);
             $user = User::create(
                 [
                     'name' => $request->name,
@@ -71,27 +88,10 @@ class UserController extends Controller
                 ]
             );
 
-            return $user;
-            $path = storage_path('/app/avatars/'. $user->id .'/');
-            
-            $filename = 'avatar.'. $ext;
-            
-            if (!File::exists($path)) {
-                File::makeDirectory($path, 0775, true, true);
-            }
-            $location = storage_path('/app/avatars/' . $user->id . '/'. $filename);
+            $decodage = base64_decode($user->data);
 
-            Image::make($image)->resize(800,400)->save($location); //resizing and saving the image
-            
-            User::whereId($user->id)->update([
-                'fichier' => $user->id . '/' . $filename,
-            ]);
-            
+            return $decodage;
         }
-		// Verification de Role
-        // $user1 = User::find($user->id);
-        // $test2 = pg_fetch_object($user1->binaire);
-        // return pg_unescape_bytea($test2->field_bytea);
 
     }
 
