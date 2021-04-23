@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         return response()->json([
 			'Status' => 'Succes',
-			'Message' => 'Liste des ressources actives et supprimées.',
+			'Message' => 'Liste de tous les utilisateurs.',
 			'Data' => User::all(),
 		], 200);
     }
