@@ -73,26 +73,33 @@ class UserController extends Controller
 
             $binaire = pg_escape_bytea($file);
 
-            // $file64escape = pg_escape_bytea($file64);
-
-            //dd($file);
-
-            $user = User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'old_name' => $request->file('fichier')->getClientOriginalName(), # anciens nom
-                    'ext' => $request->file('fichier')->getClientOriginalExtension(), # extension
-                    'size' => $request->file('fichier')->getSize(), # taille
-
-                    'binaire' => $binaire,
-                    'data' => $file64,
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'old_name' => $request->file('fichier')->getClientOriginalName(), # anciens nom
+                'ext' => $request->file('fichier')->getClientOriginalExtension(), # extension
+                'size' => $request->file('fichier')->getSize(), # taille
+                'typemime' => $request->file('fichier')->getClientMimeType(), # type mime
+                'binaire' => $binaire,
+                'data' => $file64,
             ]);
-
-            // $decodage = base64_decode($user->data);
-
-            // return $decodage;
+            return 'Enregistrement Effectué';
         }
 
+    }
+
+
+    public function getfile(){
+        $user = User::find(7); 
+
+        $decode = base64_decode($user->data);
+        $file = fopen('test.'.$user->ext,'w');
+        fwrite($file, $decode);
+        fclose($file);
+
+        header($user->typemime);
+
+        return readfile('test.'.$user->ext);
     }
 
 
@@ -105,19 +112,6 @@ class UserController extends Controller
         imagejpeg($img);
         return $img;
     }
-
-    public function pdf(){
-        $file64 = User::find(7)->data; 
-
-        $decode = base64_decode($file64);
-        $pdf = fopen('test.pdf','w');
-        fwrite($pdf, $decode);
-        fclose($pdf);
-        return $pdf;
-    }
-
-
-
 
 
 
