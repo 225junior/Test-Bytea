@@ -23,7 +23,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Caractéristiques</a>
+              <a class="nav-link" href="users/">Utilisateurs</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Tarification</a>
