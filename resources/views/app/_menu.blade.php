@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="/">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Basculer la navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -7,12 +7,12 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="mr-auto navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Domicile
+          <a class="nav-link" href="/">Domicile
             <span class="sr-only">(actuel)</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="users/">Utilisateurs</a>
+          <a class="nav-link" href="/users">Utilisateurs</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Tarification</a>
