@@ -1,5 +1,5 @@
 <div>
-    <div class="container mt-1">
+    <div class="container mt-1 mb-5">
   
         <div class="row">
           <div class="mt-4 col-md-6">
@@ -40,9 +40,11 @@
         </table>
         
         
+        {{ $users->links() }}
         
         
         
       </div>
+      
       
 </div>

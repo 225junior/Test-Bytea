@@ -21,7 +21,7 @@
     </style>
 
 </head>
-<body>
+<body class="pb-5">
       @include('app._menu')
 
 
