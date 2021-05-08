@@ -11,6 +11,13 @@
     </div>
   </div>
   
+  <form action="">
+    <div class="form-group">
+      <label for="search" class="form-label"></label>
+      <input type="text" class="form-control" id="search" placeholder="Recherche ...">
+      <small class="form-text text-muted">Effectuez une recherche sur nimporte quelle colonne</small>
+    </div>
+  </form>
   
   <table class="table mt-5 table-hover">
     <thead>
