@@ -24,17 +24,23 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Nom</th>
-        <th scope="col">Prenoms</th>
         <th scope="col">Email</th>
+        <th scope="col">Status</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
+      @foreach ($users as $user)
+      
       <tr>
-        <th scope="row">Default</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
+        <td scope="row">{{ $user->id }}</td>
+        <td>{{ $user->name }}</td>
+        <td>{{ $user->email }}</td>
+        <td><span class="badge bg-info"> {{ $user->email }} </span></td>
+        <td> <button type="button" class="btn btn-info"> Edit </button> </td>
       </tr>
+      @endforeach
+      
     </tbody>
   </table>
   
