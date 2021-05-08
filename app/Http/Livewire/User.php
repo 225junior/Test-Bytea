@@ -13,6 +13,4 @@ class User extends Component
         return view('livewire.user');
     }
 
-
-
 }

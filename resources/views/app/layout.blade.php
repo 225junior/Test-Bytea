@@ -11,9 +11,12 @@
       .footer{
         padding-top: 20px !important;
         padding-bottom: 20px !important;
-        position:absolute;
+        position:fixed;
         bottom:0px;
+        width:100%;
         overflow:hidden;
+        box-shadow:-1px -7px 9px 2px #73818f8a;
+        margin-top:20px;
       }
     </style>
 
