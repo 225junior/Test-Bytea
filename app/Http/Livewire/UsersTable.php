@@ -8,6 +8,9 @@ use Livewire\Component;
 class UsersTable extends Component
 {
     public string $search = '';
+    protected $queryString =[
+        'search'
+    ];
 
     public function render()
     {
