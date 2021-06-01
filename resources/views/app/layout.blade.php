@@ -26,9 +26,7 @@
 
 
 
-      @yield('content')
-
-      
+      @yield('content')      
 
       @include('app._footer')
       <script src="{{ asset('js/app.js')}}"></script>

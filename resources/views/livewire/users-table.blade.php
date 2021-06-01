@@ -17,9 +17,9 @@
         <table class="table mt-5 table-hover">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Nom</th>
-              <th scope="col">Email</th>
+              <th scope="col" wire:click="setOrderField('id')">#</th>
+              <th scope="col" wire:click="setOrderField('name')">Nom</th>
+              <th scope="col" wire:click="setOrderField('email')">Email</th>
               <th scope="col">Status</th>
               <th scope="col"></th>
             </tr>
